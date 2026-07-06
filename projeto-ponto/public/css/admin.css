@@ -1,0 +1,101 @@
+/* ==========================================
+   CUSTOMIZAÇÃO GLOBAL DAS TABELAS
+   ========================================== */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 15px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    color: #495057;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+/* Zebra Striping Suave */
+.table-hover tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.01);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(26, 35, 126, 0.03) !important;
+    transition: background-color 0.2s ease;
+    cursor: pointer; /* A linha vira um botão clicável visualmente */
+}
+
+/* ==========================================
+   ESTILOS ESPECÍFICOS: ADMIN E RELATÓRIOS
+   ========================================== */
+
+/* Círculo com as iniciais do funcionário (Avatar) */
+.avatar-circle { 
+    width: 40px; 
+    height: 40px; 
+    background-color: #1a237e; /* Azul marinho do teu sistema */
+    color: white; 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold; 
+}
+
+/* Badges de Ponto (Já prontos para a tela de Relatórios) */
+.badge-entrada { 
+    background-color: #e0f8e9; 
+    color: #198754; 
+    padding: 6px 12px; 
+    border-radius: 20px; 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    font-variant-numeric: tabular-nums; 
+    display: inline-block; 
+}
+
+.badge-almoco { 
+    background-color: #fff3e0; 
+    color: #e65100; 
+    padding: 6px 12px; 
+    border-radius: 20px; 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    font-variant-numeric: tabular-nums; 
+    display: inline-block; 
+}
+
+.badge-retorno { 
+    background-color: #e3f2fd; 
+    color: #0d47a1; 
+    padding: 6px 12px; 
+    border-radius: 20px; 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    font-variant-numeric: tabular-nums; 
+    display: inline-block; 
+}
+
+.badge-saida { 
+    background-color: #ffe8e8; 
+    color: #dc3545; 
+    padding: 6px 12px; 
+    border-radius: 20px; 
+    font-size: 0.85rem; 
+    font-weight: 600; 
+    font-variant-numeric: tabular-nums; 
+    display: inline-block; 
+}

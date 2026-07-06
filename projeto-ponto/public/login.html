@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Ponto Digital</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/NextLogo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/auth.js" defer></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="/assets/NextLogo.png" alt="Logo Next" style="width: 100px; margin-bottom: 10px;">
+            <h2>NextCompany</h2>
+            <p class="text-muted">Sistema de Controle de Ponto</p>
+        </div>
+
+        <div id="alertArea"></div>
+
+        <div id="loginSection">
+            <h4 class="text-center mb-4">Entrar na Conta</h4>
+            <form id="formLogin">
+                <input type="email" class="form-control" id="loginEmail" placeholder="Email empresarial" required>
+                <input type="password" class="form-control" id="loginSenha" placeholder="Senha" required>
+                <button type="submit" class="btn btn-login">Entrar</button>
+            </form>
+            <div class="toggle-form">
+                <a href="#" id="linkToRegister">Não tem conta? Criar conta</a>
+            </div>
+        </div>
+
+        <div id="registerSection" style="display: none;">
+            <h4 class="text-center mb-4">Criar Conta</h4>
+            <form id="formRegister">
+                <input type="text" class="form-control" id="registerNome" placeholder="Nome completo" required>
+                <input type="email" class="form-control" id="registerEmail" placeholder="Email empresarial" required>
+                <input type="password" class="form-control" id="registerSenha" placeholder="Senha" required>
+                <button type="submit" class="btn btn-login">Criar Conta</button>
+            </form>
+            <div class="toggle-form">
+                <a href="#" id="linkToLogin">Já tem conta? Fazer login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

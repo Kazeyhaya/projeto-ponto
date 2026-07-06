@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Ponto | Relatórios</title>
+    <script src="/js/gatekeeper.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/relatorios.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="/js/auth-utils.js" defer></script>
+    <script src="/js/relatorios.js" defer></script>
+</head>
+
+<body>
+    <div class="container py-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-0 text-primary">
+                    <i class="fa-solid fa-file-invoice me-2"></i>Folha de Ponto Individual
+                </h1>
+                <p class="text-muted small mb-0" id="infoColaborador">Carregando dados do colaborador...</p>
+            </div>
+            <a href="/admin" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel
+            </a>
+        </div>
+
+        <div class="main-card p-4 mb-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold">Data Início</label>
+                    <input type="date" id="dataInicio" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold">Data Fim</label>
+                    <input type="date" id="dataFim" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold">Situação</label>
+                    <select id="filtroSituacao" class="form-select">
+                        <option value="todos">Todos os dias registrados</option>
+                        <option value="incompleto">Pontos Incompletos (Faltando batida)</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn btn-primary w-100" id="btnGerar">
+                        <i class="fa-solid fa-arrows-rotate me-1"></i> Atualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-card p-0 overflow-hidden mb-4">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom bg-light">
+                <h5 class="mb-0">Espelho de Ponto</h5>
+                <div id="resumoHoras" class="badge bg-dark p-2" style="font-size: 0.9rem;">Total: --:--:--</div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-start ps-4">Data</th>
+                            <th>Entrada</th>
+                            <th>Almoço</th>
+                            <th>Retorno</th>
+                            <th>Saída</th>
+                            <th class="text-end pe-4">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaPontosRelatorio">
+                        <tr>
+                            <td colspan="6" class="text-muted py-4">Utilize o filtro acima para buscar os registros.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center p-3 border-top bg-light">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center">
+                        <span class="text-muted small me-2">Ver:</span>
+                        <select id="selectItensPorPagina" class="form-select form-select-sm shadow-none" style="width: auto;">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="31">31</option>
+                        </select>
+                    </div>
+                    <span class="text-muted small" id="infoPaginacaoRelatorio">0 de 0</span>
+                </div>
+                <div class="d-flex gap-1" id="containerPaginacao">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditarPonto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-light border-bottom-0">
+                    <h5 class="modal-title text-primary"><i class="fa-solid fa-pen-to-square me-2"></i>Ajuste de Ponto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p id="modalDisplayData" class="fw-bold text-secondary small mb-3"></p>
+                    <form id="formEditarPonto">
+                        <input type="hidden" id="modalEditDataPonto">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Entrada</label>
+                                <input type="time" step="1" class="form-control" id="modalEditEntrada">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Almoço</label>
+                                <input type="time" step="1" class="form-control" id="modalEditAlmoco">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Retorno</label>
+                                <input type="time" step="1" class="form-control" id="modalEditRetorno">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small fw-bold">Saída</label>
+                                <input type="time" step="1" class="form-control" id="modalEditSaida">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-top-0 bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarEdicaoPonto">Gravar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

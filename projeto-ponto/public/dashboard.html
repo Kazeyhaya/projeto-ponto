@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextCompany - Ponto Digital</title>
+    <script src="/js/gatekeeper.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/NextLogo.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+    <script src="/js/dashboard.js" defer></script>
+</head>
+
+<body>
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="sidebar">
+                    <div class="text-center mb-4">
+                        <img src="/assets/NextLogo.png" alt="Logo" style="height: 60px;" id="logoEmpresa">
+                    </div>
+                    <nav class="nav flex-column">
+                        <a href="#" class="nav-link active" id="menu-perfil"><i class="fa-regular fa-user"></i>
+                            Perfil</a>
+                        <a href="#" class="nav-link" id="menu-calendario"><i class="fa-regular fa-calendar-alt"></i>
+                            Calendário</a>
+                        <a href="#" class="nav-link" id="menu-banco-horas"><i class="fa-regular fa-clock"></i> Banco de
+                            Horas</a>
+                        <a href="#" class="nav-link" id="menu-justificativas"><i class="fa-regular fa-file-alt"></i>
+                            Justificativas</a>
+                        <a href="#" class="nav-link" id="menu-notificacoes"><i class="fa-regular fa-bell"></i>
+                            Notificações</a>
+                    </nav>
+                    <hr>
+                    <button id="btnSair" class="btn btn-outline-danger w-100">
+                        <i class="fa-solid fa-sign-out-alt me-1"></i> Sair
+                    </button>
+                    <a href="/admin" id="adminBtn" class="btn btn-outline-warning w-100 mt-2" style="display: none;">
+                        <i class="fa-solid fa-shield-haltered me-1"></i> Painel Admin
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <div class="greeting">Olá, <span id="usuarioNome"></span>!</div>
+                        <div id="relogio" class="date-time"></div>
+                    </div>
+                    <i class="fa-solid fa-arrows-rotate refresh-icon" id="btnRefresh" title="Atualizar dados"></i>
+                </div>
+
+                <div class="summary-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <small><i class="fa-solid fa-clock me-1"></i> Horas Trabalhadas</small>
+                            <h3 id="horasTrabalhadas">00:00:00</h3>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <small><i class="fa-solid fa-fingerprint me-1"></i> Última Batida</small>
+                            <div id="ultimaBatida">--:--:--</div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-6">
+                            <small><i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Entrada</small>
+                            <div id="horaEntrada">--:--:--</div>
+                        </div>
+                        <div class="col-6 text-md-end">
+                            <small><i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Saída</small>
+                            <div id="horaSaida">--:--:--</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="main-card p-3">
+                    <h5 class="mb-3">Registro de Ponto</h5>
+                    <div class="row g-2">
+                        <div class="col-md-3">
+                            <button id="btnEntrada" class="btn btn-success btn-ponto" disabled>
+                                <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Entrada
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="btnAlmoco" class="btn btn-warning btn-ponto" disabled>
+                                <i class="fa-solid fa-utensils me-2"></i>Almoço
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="btnRetorno" class="btn btn-info btn-ponto" disabled>
+                                <i class="fa-solid fa-arrow-left me-2"></i>Retorno
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            <button id="btnSaida" class="btn btn-danger btn-ponto" disabled>
+                                <i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Saída
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-card p-3">
+                    <h5 class="mb-3">Linha do Tempo Recente</h5>
+                    <div id="timelineList">
+                        <div class="text-center text-muted">Carregando...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-badge" id="statusBadge">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Verificando conexão...</span>
+    </div>
+</body>
+
+</html>
