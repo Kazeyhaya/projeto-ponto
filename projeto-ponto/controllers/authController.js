@@ -2,13 +2,12 @@ const userModel = require('../models/userModel');
 const colaboradorModel = require('../models/colaboradorModel');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken');
-const pool = require('../db'); // ✅ ADICIONADO: Para garantir a busca no refresh
+const pool = require('../db');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secreta_acesso';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'secreta_renovacao';
 
-// --- FUNÇÃO DE LOGIN ---
 async function login(req, res) {
   const email = req.body.email ? req.body.email.trim().toLowerCase() : null;
   const { senha } = req.body;
@@ -49,14 +48,13 @@ async function login(req, res) {
       usuario: { nome: usuario.nome, role: usuario.role || 'user' }
     });
   } catch (err) {
-    console.error('❌ Erro no login:', err.message);
+    console.error('Erro no login:', err.message);
     res.status(500).json({ erro: 'Erro interno no servidor' });
   }
 }
 
 // --- FUNÇÃO DE REGISTRO ---
 async function register(req, res) {
-  // (Mantido exatamente como o seu original)
   const email = req.body.email ? req.body.email.trim().toLowerCase() : null;
   const nome = req.body.nome ? req.body.nome.trim() : null;
   const { senha } = req.body;
@@ -81,16 +79,14 @@ async function register(req, res) {
   }
 }
 
-// --- 🔄 NOVA: FUNÇÃO DE REFRESH ---
 async function refresh(req, res) {
-  const refreshToken = req.cookies.refreshToken; // Precisa do cookie-parser no index.js!
+  const refreshToken = req.cookies.refreshToken; 
   
   if (!refreshToken) return res.status(401).json({ erro: 'Acesso negado. Nenhum token encontrado.' });
 
   try {
     const decodificado = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
 
-    // Busca o usuário direto no banco para garantir que ele ainda existe e pegar o nome/role
     const result = await pool.query(`
       SELECT u.id, u.colaborador_id, c.nome, u.role 
       FROM usuarios u 
@@ -101,7 +97,6 @@ async function refresh(req, res) {
     const usuario = result.rows[0];
     if (!usuario) return res.status(403).json({ erro: 'Usuário não existe mais.' });
 
-    // Gera a pulseira nova de 15 minutos
     const accessToken = jwt.sign(
       { id: usuario.id, colaborador_id: usuario.colaborador_id, nome: usuario.nome, role: usuario.role || 'user' },
       JWT_SECRET,
@@ -110,13 +105,13 @@ async function refresh(req, res) {
 
     res.json({ accessToken: accessToken });
   } catch (err) {
-    console.error('❌ Erro na renovação:', err.message);
+    console.error(' Erro na renovação:', err.message);
     res.clearCookie('refreshToken'); // Se o token for falso ou velho, destrói!
     return res.status(403).json({ erro: 'Refresh token inválido. Faça login.' });
   }
 }
 
-// --- 🚪 NOVA: FUNÇÃO DE LOGOUT ---
+// FUNÇÃO DE LOGOUT
 async function logout(req, res) {
   res.clearCookie('refreshToken', {
     httpOnly: true,
